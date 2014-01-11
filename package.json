@@ -1,0 +1,19 @@
+{
+  "name": "node-socialpower",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node api.js",
+    "test": "jasmine-node ./tests"
+  },
+  "dependencies": {
+    "mongoose": "~3.8.4",
+    "connect-mongo": "~0.4.0",
+    "express": "~3.4.7",
+    "request": "~2.31.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=0.10.24"
+  }
+}

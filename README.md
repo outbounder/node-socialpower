@@ -67,3 +67,31 @@ Every day on midnight the game room is closed and a player with the top score wi
 
 Then highscores table of top winning players are kept up to date.
 Optionally messages can be broadcasted to authorized 3rd party apps - twitter/facebook.
+
+All in one:
+
+    -> start
+
+    time0) playerA -send-> messageA
+
+    time1) playerB -send-> messageA
+      -then-> points -given-> playerA
+
+    time2) playerC -send-> messageA
+      -then-> points -given-> playerA && playerB
+    time2) playerD -send-> messageA
+      -then-> points -given-> playerA && playerB
+
+    time3) playerF -send-> messageA
+      -then-> points -given-> playerA && playerB && playerC && playerD
+
+    -> ...
+
+
+### Tech details
+
+#### Facebook
+https://github.com/criso/fbgraph
+
+#### Twitter
+https://github.com/AvianFlu/ntwitter

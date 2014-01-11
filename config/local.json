@@ -1,0 +1,7 @@
+{
+  "db": {
+    "name": "socialpower",
+    "host": "localhost"
+  },
+  "secret": "socialpower"
+}
