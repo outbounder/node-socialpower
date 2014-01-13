@@ -1,50 +1,72 @@
+"use strict";
 var mongoose = require("mongoose");
-var crypto = require("crypto");
+var pw = require("credential");
 
 var User = new mongoose.Schema({
   username: { type: String, unique: true, required: true },
-  password: { type: String, required: true, select: false },
-  messages: [{ type: mongoose.Schema.Types.ObjectId }]
-})
+  // add Twitter/Facebook authentication in the future?
+  authType: { type: String, default: "local" },
+  credentials: String
+});
 
-var hashPassword = function(value) {
-  var md5sum;
-  md5sum = crypto.createHash('md5');
-  md5sum.update(value);
-  return md5sum.digest('hex');
-}
-
-User.pre("save", function(next) {
-  if (!this.isModified('password'))
-    return next();
-  this.password = hashPassword(this.password);
-  return next();
-})
-
-User.static("hashPassword", hashPassword)
-
-User.static("available", function(email, username, callback) {
-  this.findOne({ username: username }, callback);
-})
-
-User.static("findOneByUsernamePassword", function(username, password, callback) {
-  var pattern = {
-    username: username,
-    password: this.hashPassword(password)
+/*
+  {
+    hash: String,
+    salt: String,
+    keyLength: Number,
+    hashMethod: String,
+    workUnits: Number  
   }
-  this.findOne(pattern).exec(callback);
-})
+*/
 
-User.method("sendMessage", function(message, callback){
-  // ToDo
-  
-  // 1. check is message already stored in DB (has _id property)
-  // 1.1 create the message if not stored yet
+User.static("register", function (credentials, done) {
+  if (typeof credentials.username !== "string" || !credentials.username) {
+    done(new Error("user must have unique not-empty username"));
+    return;
+  }
+  module.exports.available(credentials.username, function (err, isAvailable) {
+    if (err) return done(err);
+    if (!isAvailable) return done(new Error("Username not available"));
+    //if authType === "local"
+    credentials.authType = "local";
+    registerLocal(credentials, function (err, user) {
+      if (err) return done(err);
+      module.exports.create(user, done);
+    });
+  });
+});
 
-  // 2. use message._id to find users who send the message before
-  // 2.1. increment those users points
-  // 
-  // 3. add the message._id to current user's messages
-})
+var registerLocal = function (user, done) {
+  if (typeof user.password !== "string" || !user.password) {
+    done(new Error("user must have not-empty password"));
+    return;
+  }
+  pw.hash(user.password, function (err, hash) {
+    if (err) return done(err);
+    delete user.password;
+    user.credentials = hash;
+    done(false, user);
+  });
+};
+
+User.static("authenticate", function (input, done) {
+  module.exports.findOne({"username": input.username}, function (err, user) {
+    if (err) return done(err);
+    if (!user) return done(false, false);
+    //if authType === "local"
+    pw.verify(user.credentials, input.password, function (err, success) {
+      if (err) return done(err);
+      if (!success) return done(false, false);
+      done(false, user._id);
+    });
+  });
+});
+
+User.static("available", function (username, callback) {
+  this.findOne({ "username": username }, function (err, user) {
+    if (err) callback(err);
+    callback(false, !user);
+  });
+});
 
 module.exports = mongoose.model("User", User);

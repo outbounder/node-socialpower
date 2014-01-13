@@ -1,26 +1,22 @@
-var mongoose = require("mongoose")
-var Socialpower = require("../../api")
+var mongoose = require("mongoose");
+var Socialpower = require("../../api");
 
-module.exports.apiendpoint = "http://127.0.0.1:3002"
+module.exports.apiendpoint = "http://127.0.0.1:3002";
 
 module.exports.connectMongoose = function(next){
-  mongoose.connect("localhost/socialpower-test", function(){
-    mongoose.connection.db.dropDatabase(function(){
-      mongoose.disconnect(function(){
-        mongoose.connect("localhost/socialpower-test", next)
-      })
-    })
-  })
-}
+  mongoose.connect("localhost/socialpower-test", next);
+};
 
 module.exports.disconnectMongoose = function(next){
-  mongoose.disconnect(next)
-}
+  mongoose.connection.db.dropDatabase(function(){
+    mongoose.disconnect(next);
+  });
+};
 
 module.exports.startApiHttpServer = function(next){
   module.exports.connectMongoose(function(){
     mongoose.disconnect(function(){
-      module.exports.api = new Socialpower()
+      module.exports.api = new Socialpower();
       module.exports.api.start({
         "port": "3002",
         "db": {
@@ -28,10 +24,14 @@ module.exports.startApiHttpServer = function(next){
           "host": "localhost"
         },
         "secret": "socialpower-test"
-      }, next)
-    })
-  })
-}
+      }, next);
+    });
+  });
+};
 module.exports.stopApiHttpServer = function(next){
-  module.exports.api.stop(next)
-}
+  module.exports.api.stop(function () {
+    module.exports.connectMongoose(function () {
+      module.exports.disconnectMongoose(next);
+    });
+  });
+};

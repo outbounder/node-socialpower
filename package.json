@@ -10,9 +10,12 @@
     "mongoose": "~3.8.4",
     "connect-mongo": "~0.4.0",
     "express": "~3.4.7",
-    "request": "~2.31.0"
+    "request": "~2.31.0",
+    "credential": "~0.2.5"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jasmine-node": "~1.12.0"
+  },
   "engines": {
     "node": ">=0.10.24"
   }
