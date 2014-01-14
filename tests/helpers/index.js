@@ -1,5 +1,5 @@
 var mongoose = require("mongoose")
-var Socialpower = require("../../api")
+var Socialpower = require("../../index")
 
 module.exports.apiendpoint = "http://127.0.0.1:3002"
 module.exports.databasename = "socialpower-test"

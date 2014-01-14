@@ -6,6 +6,7 @@ module.exports.mount = function(app){
   app.post("/users/register", require("./api/users").register)
   
   app.post("/messages", require("./api/messages").send)
+  app.get("/messages", require("./api/messages").retrieve)
 
   app.get("/", function(req, res, next){
     res.render("index")
