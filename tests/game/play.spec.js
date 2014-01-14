@@ -6,7 +6,7 @@ describe("game", function(){
   it("starts", helpers.startApiHttpServer)
 
   it("user1 sends message1", function(next){
-    user.registerAndLogin({
+    user.register({
       username: "user1",
       password: "1"
     }, function(){
@@ -19,7 +19,7 @@ describe("game", function(){
   })
 
   it("user2 sends message2", function(next){
-    user.registerAndLogin({
+    user.register({
       username: "user2",
       password: "1"
     }, function(){
