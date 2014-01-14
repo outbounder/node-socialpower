@@ -2,8 +2,9 @@
   "name": "node-socialpower",
   "version": "0.0.0",
   "private": true,
+  "main": "index.js",
   "scripts": {
-    "start": "node api.js",
+    "start": "node index.js",
     "test": "jasmine-node ./tests"
   },
   "dependencies": {
