@@ -1,5 +1,5 @@
 describe("user api", function(){
-  var request = require("request")
+  var request = require("request").defaults({jar: true})
   var helpers = require("../helpers")
   it("starts", helpers.startApiHttpServer)
 
