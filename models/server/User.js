@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var crypto = require("crypto");
+var _ = require("underscore")
 
 var Message = require("./Message")
 
@@ -38,25 +39,44 @@ schema.static("findOneByUsernamePassword", function(username, password, callback
   this.findOne(pattern).exec(callback);
 })
 
+var drawPoints = function(sender, msg, callback) {
+  // 2. use msg._id to find users who send the message before
+  // 2.1. increment those users points
+  User.update({ messages: msg }, { $inc: { points: 1 } }, function(err, users){
+    if(err) return callback(err)
+
+    // only if sender didn't send the message before 
+    if(!sender.hasMessage(msg)) {
+      // 3. add the message._id to current user's messages and increment user's points
+      sender.points += 1
+      sender.messages.push(msg)
+      sender.save(callback)
+    } else
+      callback()
+  })
+}
+
+schema.method("hasMessage", function(msg){
+  _.contains(this.messages, function(item){
+    return item.toString() === msg._id.toString()
+  })
+})
+
 schema.method("sendMessage", function(message, callback){
   var self = this
   // 1. check is message already stored in DB
   Message.findOne(message, function(err, msg){
+    if(err) return callback(err)
+
     // 1.1 create the message if not stored yet
-    if(!msg) msg = new Message()
-
-    // 2. use msg._id to find users who send the message before
-    User.find({ messages: msg._id }, function(err, users){
-      // 2.1. increment those users points
-      users.forEach(function(user){
-        user.points += 1
-        user.save(console.error)
+    if(!msg) {
+      msg = new Message(message)
+      msg.save(function(err){
+        if(err) return callback(err)
+        drawPoints(self, msg, callback)
       })
-
-      // 3. add the message._id to current user's messages
-      self.points += 1
-      self.save(callback)
-    })
+    } else
+      drawPoints(self, msg, callback)
   })
 })
 
