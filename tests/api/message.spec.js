@@ -55,5 +55,20 @@ describe("user api", function(){
     })
   })
 
+  it("retrieves messages", function(next){
+    request.get({
+      uri: helpers.apiendpoint+"/messages",
+      qs: {
+        limit: "1"
+      }
+    }, function(err, res, body){
+      expect(res.statusCode).toBe(200)
+      body = JSON.parse(body)
+      expect(body.result.length).toBe(1)
+      expect(body.total).toBe(2)
+      next()
+    })
+  })
+
   it("stops", helpers.stopApiHttpServer)
 })
