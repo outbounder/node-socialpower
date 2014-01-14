@@ -51,17 +51,31 @@ describe("activities", function () {
       });
     });
 
-    // describe("with a publication", function () {
-    //   beforeEach(function (next) {
-    //     request.post({
-    //       uri: helpers.apiendpoint + "/activity/share",
-    //       json: { "text" : "A simple text message" },
-    //       jar: cookieJar
-    //     }, function (err, res, body) {
-    //       next();
-    //     });
-    //   });
+    describe("with a publication", function () {
+      beforeEach(function (next) {
+        request.post({
+          uri: helpers.apiendpoint + "/activity/share",
+          json: { "body": "A simple text message" },
+          jar: cookieJar
+        }, function (err, res, body) {
+          next();
+        });
+      });
 
-    // });
+      it("can list the publication", function (next) {
+        request.get({
+          uri: helpers.apiendpoint + "/activity/list",
+          json: {},
+          jar: cookieJar
+        }, function(err, res, body){
+          console.log("list result:", body);
+          expect(res.statusCode).toBe(200);
+          expect(body.shares.length).toEqual(1);
+          expect(Object.keys(body.messages).length).toEqual(1);
+          next();
+        });
+      });
+
+    });
   });
 });

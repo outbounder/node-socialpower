@@ -21,7 +21,7 @@ module.exports.list = function (conditions, done) {
     results.shares = shares;
     Share.find(conditions).distinct("message", function (err, messageIds) {
       if (err) return done(err);
-      Message.find({ _id:{ $in:shares } }, function (err, messages) {
+      Message.find({ _id:{ $in:messageIds } }, function (err, messages) {
         if (err) return done(err);
         results.messages = {};
         for (var i = 0; i < messages.length; i ++) {
