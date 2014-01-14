@@ -18,7 +18,8 @@ module.exports = Backbone.View.extend({
   },
   render: function(){
     this.$el.html(this.template({
-      model: this.model
+      model: this.model,
+      user: app.user
     }))
     if(!this.model.isNew())
       this.renderPoints()

@@ -1,5 +1,6 @@
 p
   h2 Message created on #{model.get("created")}
   span #{model.get("body")}
-  button.resendButton resend
+  - if(!user.isNew())
+    button.resendButton resend
 br
