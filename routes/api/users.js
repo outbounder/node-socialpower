@@ -10,7 +10,7 @@ module.exports = {
     User.findOneByUsernamePassword(req.body.username, req.body.password, function(err, user){
       if(!err) {
         if(user)
-          req.session.userId = user.id;
+          req.session.userId = user._id.toString();
         res.send({result: user})
       } else
         res.send(500, {result: err})
@@ -19,7 +19,7 @@ module.exports = {
   register: function(req, res) {
     User.create(req.body, function(err, user){
       if(!err) {
-        req.session.userId = user.id;
+        req.session.userId = user._id.toString();
         res.send({result: user})
       } else
         res.send(500, {result: err})
