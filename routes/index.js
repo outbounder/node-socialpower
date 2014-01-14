@@ -11,5 +11,8 @@ module.exports.mount = function(app){
   app.get("/", function(req, res, next){
     res.render("index")
   })
-  app.use('/app.js', browserify('../client/index.js', {debug: true}));
+  app.use('/app.js', browserify('../client/index.js', {
+    debug: true,
+    transform: ['jadeify']
+  }));
 }

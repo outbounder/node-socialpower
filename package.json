@@ -17,7 +17,9 @@
     "browserify-middleware": "~2.2.0",
     "jquery-browserify": "~1.8.1",
     "backbone": "~1.1.0",
-    "mongoose-createdmodified": "0.0.2"
+    "mongoose-createdmodified": "0.0.2",
+    "browserify": "~3.20.0",
+    "jadeify": "~2.1.1"
   },
   "devDependencies": {
     "jasmine-node": "~1.12.0"
