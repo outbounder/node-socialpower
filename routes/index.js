@@ -1,12 +1,12 @@
 var browserify = require('browserify-middleware');
 
 module.exports.mount = function(app){
-  app.get("/users/me/logout", require("./api/users").logout)
-  app.post("/users/me/login", require("./api/users").login)
-  app.post("/users/register", require("./api/users").register)
+  app.get("/api/users/me/logout", require("./api/users").logout)
+  app.post("/api/users/me/login", require("./api/users").login)
+  app.post("/api/users/register", require("./api/users").register)
   
-  app.post("/messages", require("./api/messages").send)
-  app.get("/messages", require("./api/messages").retrieve)
+  app.post("/api/messages", require("./api/messages").send)
+  app.get("/api/messages", require("./api/messages").retrieve)
 
   app.get("/", function(req, res, next){
     res.render("index")

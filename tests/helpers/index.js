@@ -1,7 +1,7 @@
 var mongoose = require("mongoose")
 var Socialpower = require("../../index")
 
-module.exports.apiendpoint = "http://127.0.0.1:3002"
+module.exports.apiendpoint = "http://127.0.0.1:3002/api"
 module.exports.databasename = "socialpower-test"
 
 module.exports.connectMongoose = function(next){
