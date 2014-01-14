@@ -17,6 +17,9 @@ module.exports.prototype.start = function(config, next) {
   })
 
   app.configure(function(){
+    app.set('views', __dirname + '/pages')
+    app.set('view engine', 'jade')
+    
     app.use(express.favicon());
     app.use(express.logger('dev'));
     app.use(express.bodyParser());

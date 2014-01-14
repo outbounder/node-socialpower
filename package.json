@@ -11,7 +11,11 @@
     "connect-mongo": "~0.4.0",
     "express": "~3.4.7",
     "request": "~2.31.0",
-    "underscore": "~1.5.2"
+    "underscore": "~1.5.2",
+    "jade": "~1.1.4",
+    "browserify-middleware": "~2.2.0",
+    "jquery-browserify": "~1.8.1",
+    "backbone": "~1.1.0"
   },
   "devDependencies": {
     "jasmine-node": "~1.12.0"
