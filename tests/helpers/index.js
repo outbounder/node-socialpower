@@ -39,10 +39,10 @@ module.exports.stopApiHttpServer = function(next){
 }
 
 module.exports.startApiHttpServerWithLoggedUser = function(next) {
-  var users = require("./users")
+  var user = require("./user")
   module.exports.startApiHttpServer(function(){
-    users.register(function(){
-      users.login(next)
+    user.register(function(){
+      user.login(next)
     })
   })
 }
