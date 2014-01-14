@@ -25,7 +25,7 @@ module.exports.login = function(data, next){
     }
   }
 
-  request.get({
+  request.post({
     uri: helpers.apiendpoint+"/users/me/login",
     json: data
   }, next)

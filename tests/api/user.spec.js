@@ -28,7 +28,7 @@ describe("user api", function(){
   })
 
   it("login user", function(next){
-    request.get({
+    request.post({
       uri: helpers.apiendpoint+"/users/me/login",
       json: {
         username: "testuser",
