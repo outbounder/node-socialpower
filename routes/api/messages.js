@@ -12,9 +12,9 @@ module.exports = {
   },
   retrieve: function(req, res, next) {
     var pattern = req.query.pattern?JSON.parse(req.query.pattern):{}
-    var sort = req.query.sort?JSON.parse(req.query.sort):{date: -1}
+    var sort = req.query.sort?JSON.parse(req.query.sort):{created: -1}
     var skip = req.query.skip?parseInt(req.query.skip):0
-    var limit = req.query.limit?parseInt(req.query.limit):10
+    var limit = req.query.limit?parseInt(req.query.limit):5
     Message.count(function(err, messagesCount){
       Message
         .find(pattern).sort(sort)
