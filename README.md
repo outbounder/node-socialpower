@@ -39,7 +39,7 @@ held in [varnalab](http://varnalab.org) during 01.2014.
   * documentation
 
 #### седмица 2
-* practice 3/ frontend (single-page app) development
+* [practice 3/ frontend (single-page app) development](http://slid.es/outbounder/node-socialpower-class-3)
   * project frontend implementation
   * testing
   * documentation
