@@ -17,5 +17,6 @@ module.exports = Backbone.View.extend({
       )
       return false
     })
+    return this
   }
 })

@@ -5,18 +5,25 @@ $(function(){
   config = require("./config")
 
   var User = require("../models/client/User")
+  var MessagesCollection = require("../models/client/MessagesCollection")
+  
   var LoginView = require("./views/dialogs/login")
   var RegisterView = require("./views/dialogs/register")
+  var AddMessageView = require("./views/dialogs/message")
+  
   var GameView = require("./views/game")
 
   app.user = new User()
+  if(window.serverData.user != null)
+    app.user.set(window.serverData.user, {silent: true})
 
   var Router = Backbone.Router.extend({
     routes: {
       "": "showIndex",
       "register": "showRegister",
       "login": "showLogin",
-      "game": "showGame"
+      "game": "showGame",
+      "message": "showMessage"
     },
     showIndex: function(){
       $(".viewsContainer").html(require("./views/index.jade")())
@@ -48,12 +55,19 @@ $(function(){
       view.render()
     },
     showGame: function(){
+      var messages = new MessagesCollection()
       var view = new GameView({
         el: $(".viewsContainer"),
         model: app.user,
-        onLogout: function(){
-          app.router.navigate("/login", true)
-        }
+        collection: messages
+      })
+      view.render()
+      messages.fetch()
+    },
+    showMessage: function(){
+      var view = new AddMessageView({
+        el: $(".viewsContainer"),
+        model: app.user
       })
       view.render()
     }
@@ -61,4 +75,6 @@ $(function(){
 
   app.router = new Router();
   Backbone.history.start(); // triggers routes
+
+
 })

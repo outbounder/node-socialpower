@@ -65,12 +65,12 @@ schema.method("hasMessage", function(msg){
 schema.method("sendMessage", function(message, callback){
   var self = this
   // 1. check is message already stored in DB
-  Message.findOne(message, function(err, msg){
+  Message.findOne({body: message.body}, function(err, msg){
     if(err) return callback(err)
 
     // 1.1 create the message if not stored yet
     if(!msg) {
-      msg = new Message(message)
+      msg = new Message({body: message.body})
       msg.save(function(err){
         if(err) return callback(err)
         drawPoints(self, msg, callback)

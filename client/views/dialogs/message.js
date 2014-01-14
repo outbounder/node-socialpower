@@ -1,8 +1,10 @@
 module.exports = Backbone.View.extend({
-  template: require("./register.jade"),
+  template: require("./message.jade"),
   initialize: function(options){
     this.model.on("error", console.log, console)
-    this.model.once("sync", options.onLogged)
+    this.model.once("change", function(){
+      app.router.navigate("/game", true)
+    })
   },
   render: function(){
     var self = this
@@ -11,10 +13,7 @@ module.exports = Backbone.View.extend({
     }))
     this.$el.find("form").submit(function(e){
       e.preventDefault()
-      self.model.register(
-        self.$el.find("input[name=username]").val(),
-        self.$el.find("input[name=password]").val()
-      )
+      self.model.sendMessage(self.$el.find("input[name=body]").val())
       return false
     })
     return this

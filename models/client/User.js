@@ -11,6 +11,7 @@ module.exports = require("./MongoModel").extend({
       password: password
     }, {
       url: config.apiendpoint+"/users/me/login",
+      wait: true
     })
   },
   register: function(username, password) {
@@ -19,6 +20,15 @@ module.exports = require("./MongoModel").extend({
       password: password
     }, {
       url: this.url(),
+      wait: true
+    })
+  },
+  sendMessage: function(body) {
+    this.save({
+      body: body
+    }, {
+      url: config.apiendpoint+"/messages",
+      wait: true
     })
   }
 })
