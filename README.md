@@ -36,7 +36,7 @@ held in [varnalab](http://varnalab.org) during 01.2014.
 * [practice 2/ api development](http://slid.es/outbounder/node-socialpower-class-2)
   * project api implementation
   * testing
-  * documentation
+  * [documentation](/docs/api.md)
 
 #### седмица 2
 * [practice 3/ frontend (single-page app) development](http://slid.es/outbounder/node-socialpower-class-3)
