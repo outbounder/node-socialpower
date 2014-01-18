@@ -43,7 +43,7 @@ held in [varnalab](http://varnalab.org) during 01.2014.
   * project frontend implementation
   * testing
   * documentation
-* practice 4/ project management
+* [practice 4/ project management](http://slid.es/outbounder/node-socialpower-class-4)
   * deploys & releases
   * continuous integrations
 
