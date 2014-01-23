@@ -89,7 +89,7 @@ schema.method("sendMessage", function(message, callback){
     } else {
       for (var i = self.messages.length - 1; i >= 0; i--) {
         if(self.messages[i].toString() == msg._id.toString())
-          return callback(new Error("Not allowed double send"))
+          return callback("Not allowed double send")
       };
       drawPoints(self, msg, callback)
     }
