@@ -1,3 +1,4 @@
+var moment = require("moment")
 var mongoose = require("mongoose");
 var crypto = require("crypto");
 var _ = require("underscore")
@@ -9,7 +10,8 @@ var schema = new mongoose.Schema({
   password: { type: String, required: true, select: false },
   messages: [{ type: mongoose.Schema.Types.ObjectId }],
   points: {type: Number, default: 0},
-  wins: {type: Number, default: 0}
+  wins: {type: Number, default: 0},
+  lastInput: Date
 })
 
 var hashPassword = function(value) {
@@ -73,26 +75,32 @@ schema.method("hasMessage", function(msg){
 
 schema.method("sendMessage", function(message, callback){
   var self = this
+  var lastInput = moment(self.lastInput)
+  var now = moment()
+  if(self.lastInput && now.isBefore(lastInput.add(3, "second")))
+    return callback("cooldown not finished")
+  self.lastInput = new Date()
+  self.save(function(){
+    // 1. check is message already stored in DB
+    Message.findOne({body: message.body}, function(err, msg){
+      if(err) return callback(err)
 
-  // 1. check is message already stored in DB
-  Message.findOne({body: message.body}, function(err, msg){
-    if(err) return callback(err)
-
-    // 1.1 create the message if not stored yet
-    if(!msg) {
-      msg = new Message({body: message.body})
-      msg.save(function(err){
-        if(err) return callback(err)
+      // 1.1 create the message if not stored yet
+      if(!msg) {
+        msg = new Message({body: message.body})
+        msg.save(function(err){
+          if(err) return callback(err)
+          drawPoints(self, msg, callback)
+          process.emit("messageCreated", msg)
+        })
+      } else {
+        for (var i = self.messages.length - 1; i >= 0; i--) {
+          if(self.messages[i].toString() == msg._id.toString())
+            return callback("Not allowed double send")
+        };
         drawPoints(self, msg, callback)
-        process.emit("messageCreated", msg)
-      })
-    } else {
-      for (var i = self.messages.length - 1; i >= 0; i--) {
-        if(self.messages[i].toString() == msg._id.toString())
-          return callback("Not allowed double send")
-      };
-      drawPoints(self, msg, callback)
-    }
+      }
+    })
   })
 })
 
