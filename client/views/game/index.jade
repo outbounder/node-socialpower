@@ -1,5 +1,9 @@
 .points
+- if(!user.isNew())
+  .messageInput
+    h1 Your message please,
+    form
+      input(type="text", name="body")
+      input(type="submit") 
 h2 Latest messages
 .messagesList
-- if(!user.isNew())
-  button.addMessage add yours 

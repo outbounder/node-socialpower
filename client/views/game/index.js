@@ -3,9 +3,6 @@ var MessageView = require("./message")
 module.exports = Backbone.View.extend({
   template: require("./index.jade"),
   pointsTemplate: require("./points.jade"),
-  events: {
-    "click .addMessage": "addMessage"
-  },
   initialize: function(){
     this.bindTo(this.model, "change", function(){
       this.collection.fetch()
@@ -16,14 +13,22 @@ module.exports = Backbone.View.extend({
       this.collection.fetch()
     })
   },
-  addMessage: function(){
-    app.router.navigate("/message", true)
+  submitMessage: function(e){
+    e.preventDefault()
+    var $input = this.$el.find("input[name=body]")
+    this.model.sendMessage($input.val())
+    $input.val("")
+    return false
   },
   render: function(){
+    var self = this
     this.$el.html(this.template({
       model: this.model,
       user: app.user
     }))
+    this.$el.find(".messageInput form").submit(function(e){
+      return self.submitMessage(e)
+    })
     if(!this.model.isNew())
       this.renderPoints()
     return this
