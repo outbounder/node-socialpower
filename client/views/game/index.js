@@ -7,11 +7,14 @@ module.exports = Backbone.View.extend({
     "click .addMessage": "addMessage"
   },
   initialize: function(){
-    this.model.on("change", function(){
+    this.bindTo(this.model, "change", function(){
       this.collection.fetch()
       this.renderPoints()
-    }, this)
-    this.collection.on("sync", this.renderMessages, this)
+    })
+    this.bindTo(this.collection,"sync", this.renderMessages)
+    this.bindTo(app, "messageCreated", function(){
+      this.collection.fetch()
+    })
   },
   addMessage: function(){
     app.router.navigate("/message", true)

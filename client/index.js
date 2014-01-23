@@ -1,7 +1,7 @@
 require("./vendor");
 
 $(function(){
-  app = {};
+  app = _.extend({}, Backbone.Events)
   app.socket = null
   config = require("./config")
 
@@ -63,6 +63,9 @@ $(function(){
         })
         app.socket.on("win", function(wins){
           alert("YOU JUST WON! YOU HAVE "+wins+" WINS")
+        })
+        app.socket.on("messageCreated", function(msg){
+          app.trigger("messageCreated", msg)
         })
       }
   
