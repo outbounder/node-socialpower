@@ -61,6 +61,9 @@ $(function(){
         app.socket.on("points", function(points){
           app.user.set("points", points)
         })
+        app.socket.on("win", function(wins){
+          alert("YOU JUST WON! YOU HAVE "+wins+" WINS")
+        })
       }
   
       var messages = new MessagesCollection()

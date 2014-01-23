@@ -53,7 +53,7 @@ module.exports.prototype.start = function(config, next) {
     });
   })
 
-  process.on("socketEmit", function(userId, eventName, eventData){
+  var socketEmit = function(userId, eventName, eventData){
     var sockets = self.io.sockets.clients()
     for (var i = sockets.length - 1; i >= 0; i--) {
       if(sockets[i].userId == userId) {
@@ -61,7 +61,15 @@ module.exports.prototype.start = function(config, next) {
         return
       }
     };
-  })
+  }
+
+  process.on("socketEmit", socketEmit)
+
+  var dnode = require('dnode');
+  var server = dnode({
+    socketEmit : socketEmit
+  });
+  server.listen(5004);
 }
 
 module.exports.prototype.stop = function(next){

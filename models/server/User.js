@@ -8,7 +8,8 @@ var schema = new mongoose.Schema({
   username: { type: String, unique: true, required: true },
   password: { type: String, required: true, select: false },
   messages: [{ type: mongoose.Schema.Types.ObjectId }],
-  points: {type: Number, default: 0}
+  points: {type: Number, default: 0},
+  wins: {type: Number, default: 0}
 })
 
 var hashPassword = function(value) {
@@ -72,6 +73,7 @@ schema.method("hasMessage", function(msg){
 
 schema.method("sendMessage", function(message, callback){
   var self = this
+
   // 1. check is message already stored in DB
   Message.findOne({body: message.body}, function(err, msg){
     if(err) return callback(err)
@@ -83,8 +85,13 @@ schema.method("sendMessage", function(message, callback){
         if(err) return callback(err)
         drawPoints(self, msg, callback)
       })
-    } else
+    } else {
+      for (var i = self.messages.length - 1; i >= 0; i--) {
+        if(self.messages[i].toString() == msg._id.toString())
+          return callback(new Error("Not allowed double send"))
+      };
       drawPoints(self, msg, callback)
+    }
   })
 })
 
