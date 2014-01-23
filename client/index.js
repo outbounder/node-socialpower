@@ -2,6 +2,7 @@ require("./vendor");
 
 $(function(){
   app = {};
+  app.socket = null
   config = require("./config")
 
   var User = require("../models/client/User")
@@ -55,6 +56,16 @@ $(function(){
       view.render()
     },
     showGame: function(){
+      if(!app.socket) {
+        app.socket = io.connect();
+        app.socket.on("points", function(points){
+          app.user.set("points", points)
+        })
+        app.socket.on("win", function(wins){
+          alert("YOU JUST WON! YOU HAVE "+wins+" WINS")
+        })
+      }
+  
       var messages = new MessagesCollection()
       var view = new GameView({
         el: $(".viewsContainer"),
@@ -75,6 +86,5 @@ $(function(){
 
   app.router = new Router();
   Backbone.history.start(); // triggers routes
-
 
 })

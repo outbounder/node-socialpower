@@ -1,6 +1,8 @@
 p
   h2 Message created on #{model.get("created")}
   span #{model.get("body")}
-  - if(!user.isNew())
+  - var hasSendBefore = user.attributes.messages.indexOf(model.id) === -1
+  - var logged = !user.isNew()
+  - if(logged && hasSendBefore)
     button.resendButton resend
 br

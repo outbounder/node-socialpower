@@ -6,6 +6,7 @@ module.exports = require("./MongoModel").extend({
   },
   login: function(username, password) {
     var self = this
+    this.id = null;
     this.save({
       username: username,
       password: password

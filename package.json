@@ -19,7 +19,11 @@
     "backbone": "~1.1.0",
     "mongoose-createdmodified": "0.0.2",
     "browserify": "~3.20.0",
-    "jadeify": "~2.1.1"
+    "jadeify": "~2.1.1",
+    "socket.io": "~0.9.16",
+    "session.socket.io": "~0.1.6",
+    "cron": "~1.0.1",
+    "dnode": "~1.2.0"
   },
   "devDependencies": {
     "jasmine-node": "~1.12.0"
