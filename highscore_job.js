@@ -36,7 +36,7 @@ if(!module.parent) {
 
   mongoose.connect(config.db.host+"/"+config.db.name, function(err){
     var cronJob = require('cron').CronJob;
-    new cronJob('1 * * * * *', function(){
+    new cronJob('59 23 * * * *', function(){
       drawDailyWins(function(err, result){
         console.log("daily draw finished, updated ", result.updateCount)
         if(mainsite)
