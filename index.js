@@ -64,6 +64,12 @@ module.exports.prototype.start = function(config, next) {
   }
 
   process.on("socketEmit", socketEmit)
+  process.on("messageCreated", function(msg){
+    var sockets = self.io.sockets.clients()
+    for (var i = sockets.length - 1; i >= 0; i--) {
+      sockets[i].emit("messageCreated", msg)
+    }
+  })
 
   var dnode = require('dnode');
   var server = dnode({

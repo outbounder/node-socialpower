@@ -84,6 +84,7 @@ schema.method("sendMessage", function(message, callback){
       msg.save(function(err){
         if(err) return callback(err)
         drawPoints(self, msg, callback)
+        process.emit("messageCreated", msg)
       })
     } else {
       for (var i = self.messages.length - 1; i >= 0; i--) {
