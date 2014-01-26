@@ -49,7 +49,7 @@ held in [varnalab](http://varnalab.org) during 01.2014.
 
 #### седмица 3
 * practice 5/ project improvements
-* practice 6/ challenges and team highscores, real live testing party :)
+* [practice 6/ challenges and team highscores, real live testing party :)](http://slid.es/outbounder/node-socialpower-class-6)
 
 ### project scope
 
