@@ -26,7 +26,7 @@ held in [varnalab](http://varnalab.org) during 01.2014.
 
 ### schedule
 
-#### седмица 1
+#### week 1
 * [practice 1/ project setup](http://slid.es/outbounder/node-socialpower-class-1)
   * git
   * nvm
@@ -38,7 +38,7 @@ held in [varnalab](http://varnalab.org) during 01.2014.
   * testing
   * [documentation](/docs/api.md)
 
-#### седмица 2
+#### week 2
 * [practice 3/ frontend (single-page app) development](http://slid.es/outbounder/node-socialpower-class-3)
   * project frontend implementation
   * testing
@@ -47,7 +47,7 @@ held in [varnalab](http://varnalab.org) during 01.2014.
   * deploys & releases
   * continuous integrations
 
-#### седмица 3
+#### week 3
 * practice 5/ project improvements
 * [practice 6/ challenges and team highscores, real live testing party :)](http://slid.es/outbounder/node-socialpower-class-6)
 
@@ -86,12 +86,3 @@ All in one:
       -then-> points -given-> playerA && playerB && playerC && playerD
 
     -> ...
-
-
-### Tech details
-
-#### Facebook
-https://github.com/criso/fbgraph
-
-#### Twitter
-https://github.com/AvianFlu/ntwitter
